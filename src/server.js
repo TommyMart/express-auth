@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors")
 const { User } = require("./models/UserModel");
 const { generateJWT } = require("./functions/jwtFunctions");
 const { validateUserAuth } = require("./functions/jwtFunctions");
@@ -10,6 +11,14 @@ app.use(express.json());
 // Enable this if you want front-ends to have more freedom about how they make 
 // requests. eg. this is for HTML URL-encoded forms
 // app.use(express.urlencoded({extended: true}));
+
+let corsOptions = {
+    //          CRA local                   Vite local              Deployed React app
+    origin: ["http://localhost:3000", "http://localhost:5173", "https://deployedreactapp.com"],
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 
 app.get("/", () => {
     response.json({
