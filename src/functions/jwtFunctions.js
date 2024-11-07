@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken")
 
 let jwtSecretKey = process.env.JWT_SECRET_KEY;
-require("dotenv").config();
 
 // async function generateJWT(userDetailsObj)
 async function generateJWT(userId, username, roles = null){
@@ -27,13 +26,13 @@ async function validateUserAuth(request, response, next){
     console.log(providedToken);
 
     if (!providedToken) {
-        return response.staus(404).json({
-            message: "No token found"
+        return response.staus(403).json({
+            message: "Sign in to view this content!"
         })
     }
 
     let decodedData = decodeJWT(providedToken);
-
+    console.log(decodedData);
     if (decodedData,userId){
         next();
     } else {

@@ -1,7 +1,7 @@
 const express = require("express");
 const { User } = require("./models/UserModel");
 const { generateJWT } = require("./functions/jwtFunctions");
-const { validateUserAuth } = require("../functions/jwtFunctions");
+const { validateUserAuth } = require("./functions/jwtFunctions");
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.get("/", () => {
     response.json({
         message: "Hello world"
     })
-})
+});
 
 app.post("./signup", async (request, response) => {
     // check that a username and password are provided in request.body
@@ -31,7 +31,7 @@ app.post("./signup", async (request, response) => {
     let newUser = await User.create({username: username, password: password});
 
     // make a JWT based on the username and the userID
-    newJWT = generateJWT(newUser.id, newUser.username);
+    let newJWT = generateJWT(newUser.id, newUser.username);
 
     // return the JWT
     response.json({
